@@ -1,7 +1,5 @@
 package hash_table
 
-import "fmt"
-
 const sizeTable = 20
 
 type HashTable struct {
@@ -31,23 +29,23 @@ func (ht *HashTable) Add(key string, value string) {
 	}
 }
 
-func (ht *HashTable) Get(key string) (string, error) {
+func (ht *HashTable) Get(key string) string {
 	var tableIndex, hashValue int32
 
 	hashValue = Hash(key)
 	tableIndex = hashValue%sizeTable - 1
 
 	if len(ht.table[tableIndex]) == 0 {
-		return ht.table[tableIndex][0][1], nil
+		return ht.table[tableIndex][0][1]
 	} else {
 		for i := range ht.table[tableIndex] {
 			if Hash(ht.table[tableIndex][i][0]) == hashValue {
-				return ht.table[tableIndex][i][1], nil
+				return ht.table[tableIndex][i][1]
 			}
 		}
 	}
 
-	return "", fmt.Errorf("no such element")
+	return ""
 }
 
 func (ht *HashTable) Delete(key string) {
